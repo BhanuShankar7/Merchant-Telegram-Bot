@@ -27,11 +27,13 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-# Initialize Database check
-try:
-    database.init_db()
-except Exception as e:
-    logger.error(f"DB Init Failed: {e}")
+
+# Initialize Database is now handled in main.py lifespan
+# try:
+#     database.init_db()
+# except Exception as e:
+#     logger.error(f"DB Init Failed: {e}")
+
 
 # MEMBER MENU (Coins)
 # MEMBER MENU (Rupees)
@@ -689,11 +691,12 @@ async def handle_cancel_last_order(update: Update, context: ContextTypes.DEFAULT
 # MAIN
 # -----------------------------------------------------------------------------
 
-def main():
+
+def get_application():
     TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     if not TOKEN:
         print("Error: TELEGRAM_BOT_TOKEN not found.")
-        return
+        return None
 
     application = ApplicationBuilder().token(TOKEN).job_queue(None).build()
 
@@ -720,8 +723,14 @@ def main():
     application.add_handler(CommandHandler("cancel_order", handle_cancel_last_order))
     application.add_handler(MessageHandler(filters.Regex(r"(?i)cancel order"), handle_cancel_last_order))
 
-    print("Bot is running...")
-    application.run_polling()
+    return application
+
+def main():
+    application = get_application()
+    if application:
+        print("Bot is running...")
+        application.run_polling()
 
 if __name__ == "__main__":
     main()
+
