@@ -1,0 +1,21 @@
+.done-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 15px;
+    background-color: var(--success-color);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.done-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.done-btn:active {
+    transform: translateY(0);
+}
